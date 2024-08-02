@@ -73,10 +73,14 @@ namespace edw{
 
     void Window::show(){
         for(const auto& behavior: initBehaviors) behavior();
-
+        
         if(!window) return;
+        
+        float lastTime{};
         while (!glfwWindowShouldClose(window)){
-            
+            float current = glfwGetTime();
+            setDeltaTime(current - lastTime);
+            lastTime = current;
             for(const auto& behavior: frameBehaviors) behavior();
             
             input.processJoystick();

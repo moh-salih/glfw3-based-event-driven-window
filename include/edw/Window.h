@@ -162,6 +162,10 @@ namespace edw{
             Size(int width=600, int height=600): width(width), height(height){}
         } size;
 
+
+        void setDeltaTime(float t){
+            deltaTime = t;
+        }
         void setupCallbacks();
         // Initializes GLFW and create the window. setup callbacks, and execute initialization behaviors
         void init();
@@ -174,7 +178,10 @@ namespace edw{
         typedef std::function<void()> Behavior;
         Window();
         ~Window();
-
+        
+        float getDeltaTime() const {
+            return deltaTime;
+        }
         void setFullScreen(bool yes);
 
 
@@ -226,7 +233,7 @@ namespace edw{
         std::vector<Behavior> initBehaviors, frameBehaviors;
         GLFWwindow * window;
 
-        
+        float deltaTime{};
         bool fullScreen = false;
     };
 }
