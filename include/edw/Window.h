@@ -64,6 +64,11 @@ namespace edw{
                 if(it != keyReleaseCallbacks.end()){
                     for(const KeyCallback& callback: it->second) callback();
                 }
+            }else if(action == GLFW_REPEAT){
+                auto it = keyRepeatCallbacks.find(key);
+                if(it != keyRepeatCallbacks.end()){
+                    for(const KeyCallback& callback: it->second) callback();
+                }
             }
         }
 
@@ -117,6 +122,10 @@ namespace edw{
             keyPressCallbacks[key].push_back(callback);
         }
 
+        void onKeyRepeat(int key, const KeyCallback &callback){
+            keyRepeatCallbacks[key].push_back(callback);
+        }
+
         void onKeyRelease(int key, const KeyCallback &callback){
             keyReleaseCallbacks[key].push_back(callback);
         }
@@ -139,7 +148,7 @@ namespace edw{
         std::vector<unsigned int> joysticks;
         std::vector<CursorCallback> cursorCallbacks;
         std::unordered_map<int, std::vector<KeyCallback>> mousePressCallbacks, mouseReleaseCallbacks;
-        std::unordered_map<int, std::vector<KeyCallback>> keyPressCallbacks, keyReleaseCallbacks;
+        std::unordered_map<int, std::vector<KeyCallback>> keyPressCallbacks, keyReleaseCallbacks, keyRepeatCallbacks;
         std::unordered_map<int, std::vector<std::function<void()>>> joystickPressCallbacks, joystickReleaseCallbacks;
         std::unordered_map<int, std::vector<unsigned char>> previousButtonState;
         std::unordered_map<int, std::vector<float>> previousAxesState;
